@@ -18,9 +18,9 @@ HTML 3d animation design editor
   - Angel snap
 
 Навигация/отображение работа с камерой:
-  - shift+drag, right mouse buttom -> pan
-  - shift+drag, left mouse buttom  -> rotate 
-  - shift+drag, wheel              -> zoom
+  - shift+drag + right mouse buttom -> pan
+  - shift+drag + left mouse buttom  -> rotate 
+  - shift+drag + wheel              -> zoom
   - Переключение камеры орбитальная/свободная
 
 Свет:
