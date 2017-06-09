@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <!--
+    - merge обектов???
+    - сбросить трансформацию объекта???
+    - камера ограничение по отдаелнию и приближению объекта от камеры
+    - древо объектов???
+    - редактор материлов
+    - навигатор моделей
+    - готовые анимации
+    - конфигуратор, настройки
+    - прогрузка картинок зарание + индикация загрузки приложения
+    - контекстное меню
+    - консоль???
+    - камера
+    - освещение, добавить различные варианты???
+    - изменение курсора в зависимости от режима
+    - обводка
+    - при закрытиии страницы, предупреждение, использовать хранилище
+    -->
+    <meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+    <title>Editor</title>
+    <meta charset="windows-1251">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+
+    <link href="lib/jquery/ui-lightness/jquery-ui-1.10.4.custom.css" rel="stylesheet" media="screen">
+
+    <link href="style.css" rel="stylesheet" media="screen">
+    <link href="styleDisign.css" rel="stylesheet" media="screen">
+    <link href="styleTimeLine.css" rel="stylesheet" media="screen">
+
+    <script src="lib/colorPicker/colorPicker.js"></script>
+    <script src="lib/jquery/jquery-1.8.3.js"></script>
+    <script src="lib/jquery/jquery-ui-1.9.2.custom.js"></script>
+
+    <script src="lib/three/three.js"></script>
+    <script src="lib/three/TrackballControls.js"></script>
+    <script src="lib/three/OrbitControls.js"></script>
+    <script src="lib/three/support.js"></script>
+
+    <script src="lib/fs/canvas-toBlob.js"></script>
+    <script src="lib/fs/FileSaver.js"></script>
+
+    <script src="lib/E.js"></script>
+    <script src="lib/GUI.js"></script>
+    <script src="lib/Undo.js"></script>
+    <script src="lib/Utils.js"></script>
+    <script src="lib/World.js"></script>
+    <script src="lib/Camera.js"></script>
+    <script src="lib/Objects.js"></script>
+    <script src="lib/Transformation.js"></script>
+    <script src="lib/Helper.js"></script>
+    <script src="lib/Input.js"></script>
+    <!--<script src="lib/Сonsole.js"></script>-->
+    <script src="lib/Animation.js"></script>
+    <script src="lib/Core.js"></script>
+
+</head>
+<body>
+<input id="input" maxlength="">
+
+<div id="header" class="draggable">
+
+    <div style="border-left: 1px solid #9a9a9a; border-right: 1px solid #ffffff;  white-space: nowrap; float: left; width: 1px; height: 40px; "></div>
+
+    <div class="btn-group">
+        <img id="edit_view" class="btn" btn-toggle src="pic/eye.png">
+        <img id="edit_type_camera" class="btn" btn-toggle src="pic/orbit.png" alt-src="pic/free.png">
+        <img id="edit_reset_camera" class="btn" src="pic/reset.png">
+        <img id="edit_center" class="btn" src="pic/center.png">
+        <img id="camera-prop" class="btn" src="pic/camera-prop.png">
+        <img id="camera-state-store" class="btn" src="pic/camera-state-store.png">
+        <img id="camera-state-restore" class="btn" src="pic/camera-state-restore.png">
+    </div>
+
+    <div class="btn-group">
+        <img id="edit-snap-pos" class="btn" btn-toggle src="pic/pos-snap.png">
+        <img id="edit-snap-ang" class="btn" btn-toggle src="pic/ang-snap.png">
+    </div>
+
+    <!--<div class="btn-down" swap>-->
+    <!--<li><div class="btn">0</div></li>-->
+    <!--<ul>-->
+    <!--<li><div class="btn">1</div></li>-->
+    <!--<li><div class="btn">2</div></li>-->
+    <!--<li><div class="btn">3</div></li>-->
+    <!--</ul>-->
+    <!--</div>-->
+
+
+    <img id="delete-obj" class="btn" src="pic/delete-obj.png">
+    <img id="add-light" class="btn" src="pic/add-light.png">
+    <img id="settings" class="btn" src="pic/global-settings.png">
+    <div class="btn" onclick="fn()">FN</div>
+
+    <div style="border-left: 1px solid #9a9a9a; border-right: 1px solid #ffffff;  white-space: nowrap; float: left; width: 1px; height: 40px; margin-left: 4px"></div>
+
+</div>
+
+<div id="tool" class="draggable">
+
+    <div style="border-bottom: 1px solid #9a9a9a; border-top: 1px solid #ffffff; white-space: nowrap; float: left; width: 67px; height: 1px; margin-bottom: 4px"></div>
+
+    <img class="btn vert itemProperty" id="mode_global" btn-toggle src="pic/global.png" alt-src="pic/local.png">
+    <img class="btn vert itemProperty" id="mode_basis" btn-toggle src="pic/pivot.png">
+
+    <div class="btn-group" radio-group>
+        <img class="btn vert" id="mode_empty" src="pic/empty.png">
+        <img class="btn vert itemProperty" id="mode_pos" src="pic/trans.png">
+        <img class="btn vert itemProperty" id="mode_ang" src="pic/rot.png">
+        <img class="btn vert itemProperty" id="mode_escale" src="pic/scale.png">
+        <img class="btn vert itemProperty" id="mode_intensity" src="pic/light-intensity.png">
+        <img class="btn vert itemProperty" id="mode_distance" src="pic/light-distance.png">
+    </div>
+
+    <div style="border-bottom: 1px solid #9a9a9a; border-top: 1px solid #ffffff; white-space: nowrap; float: left; width: 67px; height: 1px; margin-top: 2px"></div>
+</div>
+
+<div id="animation-tools" class="draggable">
+    <div>
+        <table>
+            <tr>
+                <td><div style="border-left: 1px solid #9a9a9a; border-right: 1px solid #ffffff; white-space: nowrap; float: left; width: 1px; height: 40px; margin-right: 2px"></div></td>
+                <td rowspan="2">
+                    <div id="timeSlider">
+                        <table>
+                            <tr>
+                                <!--Key repository-->
+                            </tr>
+                        </table>
+                    </div>
+                </td>
+                <td><img id="addKey" class="btn" src="pic/add-key.png"></td>
+                <td><img id="rendering" class="btn" src="pic/render.png"></td>
+            </tr>
+            <tr>
+                <td><div style="border-left: 1px solid #9a9a9a; border-right: 1px solid #ffffff; white-space: nowrap; float: left; width: 1px; height: 40px; margin-right: 2px"></div></td>
+                <td><img id="playAni" class="btn" btn-toggle src="pic/play.png"></td>
+                <td><img id="stopAni" class="btn" src="pic/stop.png"></td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div id="info" class="draggable"></div>
+
+<div id="property" class="draggable">
+<div id="" class="contain">
+    <div class="head title">property</div>
+</div>
+
+<div id="property_header_object" class="contain itemProperty">
+    <div class="head title">object</div>
+</div>
+
+<div id="property_header_settings" class="contain itemProperty">
+    <div class="head title">settings</div>
+</div>
+
+<div id="property_header_light" class="contain itemProperty">
+    <div class="head title">light</div>
+</div>
+
+<div id="property_header_camera" class="contain itemProperty">
+    <div class="head title">camera</div>
+</div>
+<!-------------->
+<div id="property_name" class="contain itemProperty">
+    <div class="head">name</div>
+    <table>
+        <tr>
+            <td>name:</td>
+            <td class="input" prop="name"></td>
+        </tr>
+    </table>
+</div>
+<div id="property_pos" class="contain itemProperty">
+    <div class="head">position</div>
+    <table>
+        <tr>
+            <td>x:</td>
+            <td class="input" prop="pos" field="x"></td>
+        </tr>
+        <tr>
+            <td>y:</td>
+            <td class="input" prop="pos" field="y"></td>
+        </tr>
+        <tr>
+            <td>z:</td>
+            <td class="input" prop="pos" field="z"></td>
+        </tr>
+    </table>
+</div>
+<div id="property_ang" class="contain itemProperty">
+    <div class="head">rotate</div>
+    <table>
+        <tr>
+            <td>x:</td>
+            <td class="input" prop="ang" field="x"></td>
+        </tr>
+        <tr>
+            <td>y:</td>
+            <td class="input" prop="ang" field="y"></td>
+        </tr>
+        <tr>
+            <td>z:</td>
+            <td class="input" prop="ang" field="z"></td>
+        </tr>
+    </table>
+</div>
+<div id="property_escale" class="contain itemProperty">
+    <div class="head">scale</div>
+    <table>
+        <tr>
+            <td>x:</td>
+            <td class="input" prop="escale" field="x"></td>
+        </tr>
+        <tr>
+            <td>y:</td>
+            <td class="input" prop="escale" field="y"></td>
+        </tr>
+        <tr>
+            <td>z:</td>
+            <td class="input" prop="escale" field="z"></td>
+        </tr>
+    </table>
+</div>
+<div id="property_basis" class="contain itemProperty">
+    <div class="head">basis</div>
+    <table>
+        <tr>
+            <td>x:</td>
+            <td class="input" prop="basis" field="x"></td>
+        </tr>
+        <tr>
+            <td>y:</td>
+            <td class="input" prop="basis" field="y"></td>
+        </tr>
+        <tr>
+            <td>z:</td>
+            <td class="input" prop="basis" field="z"></td>
+        </tr>
+    </table>
+</div>
+<div id="property_eparent" class="contain itemProperty">
+    <div class="head">link</div>
+    <table>
+        <tr>
+            <td>
+                <table>
+                    <tr>
+                        <td>parent:</td>
+                        <td style="text-align: right" prop="eparent">name</td>
+                    </tr>
+                    <tr>
+                        <td>add child:</td>
+                        <td>
+                            <div id="edit_link" class="btn  btn-prop" prop="" btn-toggle>+</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>remove parent:</td>
+                        <td>
+                            <div id="edit_unlink" class="btn btn-prop" prop="">X</div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>
+<div id="property_intensity" class="contain itemProperty">
+    <table>
+        <tr>
+            <td>intensity:</td>
+            <td class="input" prop="intensity"></td>
+        </tr>
+    </table>
+</div>
+<div id="property_distance" class="contain itemProperty">
+    <table>
+        <tr>
+            <td>distance:</td>
+            <td class="input" prop="distance"></td>
+        </tr>
+    </table>
+</div>
+<div id="property_color" class="contain itemProperty">
+    <table>
+        <tr>
+            <td>color:</td>
+            <td style="width: 50%">
+                <div class="colorPicker" prop="color" cpWidth="180" cpHeight="180" cpYOff="2" bgColor
+                     cpHide="ui.colorWrite" cpChange="ui.colorChange">&nbsp;</div>
+            </td>
+        </tr>
+    </table>
+</div>
+<div id="property_opacity" class="contain itemProperty">
+    <table>
+        <tr>
+            <td>opacity:</td>
+            <td class="input" prop="opacity"></td>
+        </tr>
+    </table>
+</div>
+<div id="property_position" class="contain itemProperty">
+    <div class="head">position</div>
+    <table>
+        <tr>
+            <td>x:</td>
+            <td class="input" prop="position" field="x"></td>
+        </tr>
+        <tr>
+            <td>y:</td>
+            <td class="input" prop="position" field="y"></td>
+        </tr>
+        <tr>
+            <td>z:</td>
+            <td class="input" prop="position" field="z"></td>
+        </tr>
+    </table>
+</div>
+<div id="property_target" class="contain itemProperty">
+    <div class="head">target</div>
+    <table>
+        <tr>
+            <td>x:</td>
+            <td class="input" prop="target" field="x"></td>
+        </tr>
+        <tr>
+            <td>y:</td>
+            <td class="input" prop="target" field="y"></td>
+        </tr>
+        <tr>
+            <td>z:</td>
+            <td class="input" prop="target" field="z"></td>
+        </tr>
+    </table>
+</div>
+
+<div id="property_defGridSnap" class="contain itemProperty">
+    <table>
+        <tr>
+            <td>grid snap:</td>
+            <td class="input" prop="defGridSnap"></td>
+        </tr>
+    </table>
+</div>
+<div id="property_defAngSnap" class="contain itemProperty">
+    <table>
+        <tr>
+            <td>angel snap:</td>
+            <td class="input" prop="defAngSnap"></td>
+        </tr>
+    </table>
+</div>
+
+<div id="property_camPanAngCnt" class="contain itemProperty">
+    <table>
+        <tr>
+            <td>ang camera cnt:</td>
+            <td class="input" prop="camPanAngCnt"></td>
+        </tr>
+    </table>
+</div>
+
+<div id="property_anmFrmDelay" class="contain itemProperty">
+    <table>
+        <tr>
+            <td>frm delay ms:</td>
+            <td class="input" prop="anmFrmDelay"></td>
+        </tr>
+    </table>
+</div>
+
+<div style="border-bottom: 1px solid #9a9a9a; border-top: 1px solid #ffffff; white-space: nowrap; float: left; width: 150px; height: 1px;"></div>
+
+</div>
+
+<canvas id="surf"></canvas>
+<canvas id="rnd" style="display: none"></canvas>
+
+<script>
+    function fn(){
+
+    }
+    init('#surf', '#rnd');
+</script>
+
+</body>
+</html>

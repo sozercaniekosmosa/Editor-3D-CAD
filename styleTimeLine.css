@@ -1,0 +1,65 @@
+#timeSlider{
+    width: 500px;
+    height: 88px;
+
+    border: 1px solid #bcbcbc;
+
+    padding: 1px;
+    margin: 1px;
+
+    float: left;
+    white-space: nowrap;
+
+    overflow-x:scroll;
+    overflow-y:hidden;
+}
+
+.key{
+    /*width: 100px;*/
+    height: 65px;
+
+    border: 1px solid #bcbcbc;
+
+    padding: 0;
+    margin: 0;
+
+    display: inline-block;
+    /*float: left;*/
+    /*margin-left: auto;*/
+}
+
+.key.select-key{
+    outline: 2px solid #333333;
+}
+
+.apply{
+    float:left;
+}
+
+.delete{
+    float:right;
+    display: none;
+}
+
+.more{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+
+    display: none;
+}
+
+.cnt{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 15px;
+    padding: 2px;
+}
+
+.btn-dmn {
+    margin: 1px;
+    padding: 0px;
+    width: 24px;
+    height: 24px;
+}

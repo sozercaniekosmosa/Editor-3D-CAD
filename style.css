@@ -1,0 +1,96 @@
+/** { outline: 1px dotted red; }*/
+/** * { outline: 1px dotted green; }*/
+/** * * { outline: 1px dotted orange; }*/
+/** * * * { outline: 1px dotted blue; }*/
+/** * * * * { outline: 1px solid red; }*/
+/** * * * * * { outline: 1px solid green; }*/
+/** * * * * * * { outline: 1px solid orange; }*/
+/** * * * * * * * { outline: 1px solid blue; }*/
+* {
+    margin: 0;
+    padding: 0;
+    -webkit-user-select: none; /*noselect*/
+}
+
+/*body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, button, textarea, p, blockquote, th, td {*/
+/*margin: 0;*/
+/*padding: 0;*/
+/*-webkit-user-select: none; *//*noselect*/
+/*}*/
+
+html, body {
+    height: 100%;
+}
+
+body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: bold;
+    background-color: #eeeeee;
+    overflow: hidden;
+}
+
+#header {
+    left: 5px;
+    top: 5px;
+}
+
+#tool {
+    left: 5px;
+    top: 100px;
+
+    width: 66px;
+}
+
+#surf {
+    width: 100%;
+    height: 99.7%;
+
+    border: solid 1px #808080;
+}
+
+#animation-tools {
+    height: 100px;
+
+    left: 5px;
+
+    bottom: 5px;
+}
+
+#info {
+    right: 0;
+
+    right: 0px;
+
+    bottom: 0px;
+
+    width: 200px;
+    height: 100px;
+}
+
+#property {
+    font-size: small;
+    font-weight: normal;
+
+    right: 5px;
+    top: 5px;
+
+    width: 150px;
+}
+
+.draggable {
+    position: absolute;
+
+    padding: 5px 5px 5px 5px;
+
+    border: solid 1px #808080;
+    border-radius: 4px;
+    /*background-color: lightgray;*/
+    background-color: rgba(255, 255, 255, 0.5);
+    /*box-shadow: 2px 2px 3px rgba(0,0,0,.2), 10px 10px 40px rgba(0,0,0,.1);*/
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
