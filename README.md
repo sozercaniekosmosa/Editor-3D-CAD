@@ -7,7 +7,7 @@ HTML 3d animation design editor
 
 ![скриншот](https://github.com/sozercaniekosmosa/Editor-3D-CAD/blob/master/pic/3dcad-2.png)
 
-## Данное приложение имеет ряд функций:
+## Возможности:
 
 ### Операции над объектами:
   - Параллельный перенос          (W)
