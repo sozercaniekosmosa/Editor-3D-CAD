@@ -5,7 +5,7 @@ HTML 3d animation design editor
 
 Приложение не притендует на лавры профессионального инструмаента и создавалось скорее для развития навыков создания подобных приложений.
 
-![alt text](https://github.com/sozercaniekosmosa/Editor-3D-CAD/blob/master/pic/3dcad.png)
+![скриншот](https://github.com/sozercaniekosmosa/Editor-3D-CAD/blob/master/pic/3dcad-2.png)
 
 ## Данное приложение имеет ряд функций:
 
