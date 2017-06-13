@@ -22,7 +22,7 @@ HTML 3d animation design editor
   - Создание/удаление связей (родительский -> дочерний)
   - Grid snap
   - Angel snap
-  - Центрование по выделенному    (ctrl+F)
+  - Центрование по выделенному    (shift+F)
 
 ### Навигация/отображение работа с камерой:
   - shift+drag + right mouse buttom -> pan
