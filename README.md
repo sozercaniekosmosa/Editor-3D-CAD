@@ -3,6 +3,8 @@ HTML 3d animation design editor
 
 Данное web-приложение задумывалось для создания 3D анимации с применением технологии webgl (three.js) в рамках HTML5
 
+Demo: https://sozercaniekosmosa.github.io/Editor-3D-CAD/
+
 Приложение не претендует на лавры профессионального инструмаента и создавалось скорее для развития навыков создания подобных приложений, хотя изначально планировалось сделать некоторый коммерческий уклон.
 
 ![скриншот](https://github.com/sozercaniekosmosa/Editor-3D-CAD/blob/master/pic/3dcad-2.png)
